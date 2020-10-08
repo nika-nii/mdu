@@ -7,50 +7,42 @@ def compile(code):
 
     # python language
     if code['language'] == 'python':
-        p = subprocess.run(["python3", code['file']], stderr=subprocess.PIPE)
-    
+        p = subprocess.run(["python", "-m", "py_compile", code['file']], 
+                            stderr = subprocess.PIPE)
+        data = code['file'][:-2] + 'pyc'
+
     # c language
     if code['language'] == 'c':
-        if subprocess.run(["gcc", code['file']], stderr=subprocess.PIPE) == 0:
-            p1 = subprocess.run(["gcc", code['file']], stderr=subprocess.PIPE)
-            p = subprocess.run(["./a.out"], stderr=subprocess.PIPE)
-        else:
-            p = subprocess.run(["gcc", code['file']], stderr=subprocess.PIPE)
+        p = subprocess.run(["gcc", code['file']], stderr = subprocess.PIPE)
+        data = 'a.out'
 
     # c++ language
     if code['language'] == 'c++':
-        if subprocess.run(["g++", code['file']], stderr=subprocess.PIPE) == 0:
-            p1 = subprocess.run(["g++", code['file']], stderr=subprocess.PIPE)
-            p = subprocess.run(["./a.out"], stderr=subprocess.PIPE)
-        else:
-            p = subprocess.run(["g++", code['file']], stderr=subprocess.PIPE)
+        p = subprocess.run(["g++", code['file']], stderr = subprocess.PIPE)
+        data = 'a.out'
 
     # java language
     if code['language'] == 'java':
-        if subprocess.run(["javac", code['file']], stderr=subprocess.PIPE) == 0:
-            p1 = subprocess.run(["javac", code['file']], stderr=subprocess.PIPE)
-            p = subprocess.run(["java", p1], stderr=subprocess.PIPE)
-        else:
-            p = subprocess.run(["javac", code['file']], stderr=subprocess.PIPE)
-
+        p = subprocess.run(["javac", code['file']], stderr = subprocess.PIPE)
+        data = code['file'][:-4] + 'class'
+    
     # pascal language
     if code['language'] == 'pascal':
-        if subprocess.run(["fpc", code['file']], stderr=subprocess.PIPE) == 0:
-            p1 = subprocess.run(["fpc", code['file']], stderr=subprocess.PIPE)
-            p = subprocess.run(["./Main"], stderr=subprocess.PIPE)
-        else:
-            p = subprocess.run(["fpc", code['file']], stderr=subprocess.PIPE)
-
+        p = subprocess.run(["fpc", code['file']], stderr = subprocess.PIPE)
+        data = code['file'][:-4]
+        
     # return dictionary
     if p.returncode == 0:
         dictionary ={"errors": True,
-                     "error-message": ''}
+                     "error-message": '',
+                     "output_file": data}
     else:
         dictionary ={"errors": False,
-                     "error-message": p.stderr}
+                     "error-message": p.stderr,
+                     "output_file": 0}
     return dictionary
 
-code = {'file': 'Main.pas',
-        'language': 'pascal'}
+code = {'file': 'test_code/Main.py',
+        'language': 'python'}
 dictionary = compile(code)
 print(dictionary)
