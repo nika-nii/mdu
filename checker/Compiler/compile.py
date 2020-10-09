@@ -33,13 +33,13 @@ def compile(code):
         
     # return dictionary
     if p.returncode == 0:
-        dictionary ={"errors": True,
-                     "error-message": '',
+        dictionary ={"errors": False,
+                     "error-message": "",
                      "output_file": data}
     else:
-        dictionary ={"errors": False,
+        dictionary ={"errors": True,
                      "error-message": p.stderr,
-                     "output_file": 0}
+                     "output_file": ""}
     return dictionary
 
 if __name__ == "__main__":
