@@ -42,7 +42,10 @@ def compile(code):
                      "output_file": 0}
     return dictionary
 
-code = {'file': 'test_code/Main.py',
-        'language': 'python'}
-dictionary = compile(code)
-print(dictionary)
+if __name__ == "__main__":
+    data = input()
+    language = input()
+    code = {'file': data,
+            'language': language}
+    print(compile(code))
+
