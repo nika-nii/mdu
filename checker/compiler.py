@@ -1,5 +1,5 @@
 import subprocess
-def compile(code):
+def compiler(code):
 
     handle = open(code['file'])
     data = handle.read()
@@ -43,11 +43,3 @@ def compile(code):
                      "output_file": "",
                      "language": code['language'] }
     return dictionary
-
-if __name__ == "__main__":
-    data = input()
-    language = input()
-    code = {'file': data,
-            'language': language}
-    print(compile(code))
-

@@ -10,14 +10,4 @@ def jsonify(file_in, compiler):
     file_out = json.dumps(d_out)
     return file_out
 
-if __name__ == "__main__":
-
-    compiler = {"output_file": "test_code/Main_false.pyc",
-                "language": "python"}
-
-    file_in = "test1.json"
-
-    print(jsonify(file_in, compiler))
-
-
 
